@@ -1,0 +1,53 @@
+@import 'fonts-mixins';
+
+$header-height: 132px;
+
+$header-height-compact: 82px;
+
+$sidebar-width: 254px;
+
+.stepper {
+  &-header {
+    height: $header-height;
+    padding: 24px 36px;
+    background-color: var(--ui-container-02);
+    box-shadow: var(--shadow-box-50);
+    width: calc(100% - #{$sidebar-width});
+    z-index: 10;
+
+    &-compact {
+      height: $header-height-compact;
+    }
+  }
+
+  &-content {
+    margin-top: $header-height;
+
+    &-compact {
+      margin-top: $header-height-compact;
+    }
+  }
+
+  &-button {
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-labels {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+
+    &-container {
+      max-width: 1086px;
+      margin: 0 auto;
+    }
+  }
+
+  &-label-active {
+    @include body-02-m(var(--text-body-01));
+  }
+}

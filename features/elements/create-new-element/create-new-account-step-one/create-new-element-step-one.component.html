@@ -1,0 +1,48 @@
+<div class="d-flex flex-column step-container">
+  <div class="ui-container-02 step-content d-flex justify-content-center">
+    <form class="example-form d-block m-auto padding-bottom" [formGroup]="createNewElementForm">
+      <div class="input-container">
+        <mat-form-field class="d-block m-auto w-100">
+          <mat-label>{{ 'elements.elementName' | translate }}</mat-label>
+          <input data-testid="element-nameInput" formControlName="elementName" matInput />
+          <mat-error data-testid="element-nameInputErr" *ngIf="name.touched">
+            <div *ngIf="name.errors?.required || name.errors?.whitespace">
+              {{ 'elements.requiredError' | translate }}
+            </div>
+            <div *ngIf="name.errors?.maxlength">{{ 'elements.maxLengthError' | translate }}</div>
+            <div *ngIf="name.errors?.invalidCharacters">{{ 'elements.specialCharactersError' | translate }}</div>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <app-select-description
+        formControlName="description"
+        *ngIf="mostUse"
+        [descriptions]="descriptions"
+        ngDefaultControl
+      ></app-select-description>
+    </form>
+  </div>
+
+  <app-stepper-footer>
+    <ng-container footer-extra-content>
+      <div class="text-left mb-4">
+        <app-terms-conditions
+          #tnc
+          [docUrl]="termAndConditionsUrl"
+          [displayedDocName]="termAndConditionsName"
+        ></app-terms-conditions>
+      </div>
+    </ng-container>
+
+    <button
+      footer-button
+      class="big-btn-primary w-100 position-relative"
+      [class.spinner]="loading$ | async"
+      [disabled]="createNewElementForm.invalid || !tnc.checkedCheckBox"
+      data-testid="element-continueBtn"
+      (click)="next()"
+    >
+      <span [class.hide-spinner-text]="loading$ | async">{{ 'global.continue' | translate }}</span>
+    </button>
+  </app-stepper-footer>
+</div>

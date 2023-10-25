@@ -1,0 +1,48 @@
+<header [class.stepper-header-compact]="steps.length <= 2 || !showBackButton" class="stepper-header position-fixed">
+  <div class="d-flex justify-content-between align-items-center">
+    <button class="stepper-button" [class.invisible]="selectedIndex === 0 || !showBackButton" cdkStepperPrevious>
+      <mat-icon class="icon-grey-02">west</mat-icon>
+      <span class="caption-02 text-grey-01">{{ backLabel }}</span>
+    </button>
+
+    <span class="title-04 text-body-01">
+      <ng-content select="[stepper-title]"></ng-content>
+    </span>
+
+    <button class="stepper-button" (click)="close()">
+      <mat-icon class="icon-grey-02">close</mat-icon>
+      <span class="caption-02 text-grey-01">{{ closeLabel }}</span>
+    </button>
+  </div>
+
+  <div *ngIf="steps.length > 2 && showBackButton" class="d-flex flex-column stepper-labels-container">
+    <mat-progress-bar
+      [value]="progress"
+      [ngStyle]="{'width': progressBarWidth}"
+      mode="determinate"
+      class="mb-1 mt-2 mx-auto"
+    ></mat-progress-bar>
+
+    <div class="stepper-labels mb-1 mt-2">
+      <div
+        *ngFor="let step of steps; let i = index"
+        [ngClass]="{ active: selectedIndex > i }"
+        class="pointer position-relative justify-content-center d-flex"
+      >
+        <span
+          class="body-02 text-grey-03"
+          [class.cursor-pointer]="showBackButton"
+          [class.stepper-label-active]="selectedIndex >= i"
+          (click)="selectIndex(selectedIndex, i)"
+          >{{ step.label }}</span
+        >
+      </div>
+    </div>
+  </div>
+</header>
+
+<div
+  class="stepper-content"
+  [class.stepper-content-compact]="steps.length <= 2 || !showBackButton"
+  [ngTemplateOutlet]="selected ? selected.content : null"
+></div>

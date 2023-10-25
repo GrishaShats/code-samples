@@ -1,0 +1,44 @@
+<div class="step-container flex-fill flex-column d-flex ui-container-02 text-center position-relative">
+  <app-stepper
+    #stepper
+    [backLabel]="'global.back' | translate"
+    [closeLabel]="'global.cancel' | translate"
+    [showBackButton]="!approvalData"
+    (stepperClose)="finishElementOpening()"
+  >
+    <span stepper-title>{{'elements.openNew' | translate}}</span>
+
+    <cdk-step>
+      <app-create-new-element-step-one
+        *ngIf="stepper.selectedIndex === 0"
+        [createNewElementForm]="createNewElementForm"
+        (saveElement)="saveElement($event)"
+        class="full-height"
+      ></app-create-new-element-step-one>
+    </cdk-step>
+
+    <cdk-step>
+      <div *ngIf="approvalData" class="d-flex flex-column align-items-center ui-container-02">
+        <app-confirmation-step2
+          [approvalData]="approvalData"
+          [textContent]="confirmationContent"
+          (finishApproval)="handleResult($event)"
+        >
+          <ng-container pending-item-label> {{newElement.elementName}}, {{newElement.description}} </ng-container>
+          <ng-container confirm-desc>{{'elements.inList' | translate }}</ng-container>
+          <ng-container confirm-buttons>
+            <button data-testid="element-goToList" class="btn-outlined space-r-m" (click)="finishElementOpening()">
+              {{'elements.goToList' | translate}}
+            </button>
+            <button data-testid="element-openAnotherBtn" class="btn-primary" (click)="requestAnotherOne()">
+              {{'elements.openAnother' | translate}}
+            </button>
+          </ng-container>
+          <button reject-button class="btn-outlined" (click)="finishElementOpening()">
+            {{'elements.cancelElementOpening' | translate}}
+          </button>
+        </app-confirmation-step2>
+      </div>
+    </cdk-step>
+  </app-stepper>
+</div>

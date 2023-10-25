@@ -1,0 +1,13 @@
+<div class="d-flex position-relative align-items-center">
+  <span class="numbers-02 text-grey-01 mr-2 break-text">{{ shownContent || copiedContent }}</span>
+  <mat-icon
+    [matTooltip]="'copy' | translate"
+    [cdkCopyToClipboard]="copiedContent"
+    matTooltipClass="helper-tooltip"
+    matTooltipPosition="above"
+    appIconHover="16"
+    class="skip-height"
+    (click)="copyContent()"
+    >content_copy</mat-icon
+  >
+</div>

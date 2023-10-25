@@ -1,0 +1,34 @@
+@import 'fonts-mixins';
+
+.step-container {
+  height: calc(100vh - 82px);
+}
+
+form {
+  width: 495px;
+  padding-top: 72px;
+
+  &.padding-bottom {
+    padding-bottom: 110px;
+  }
+
+  mat-form-field {
+    input {
+      @include body-01(var(--text-body-01));
+    }
+  }
+
+  .input-container {
+    padding-bottom: 60px;
+  }
+}
+
+.popup-mode {
+  form {
+    padding-top: 44px;
+
+    .button-next {
+      margin-top: 72px;
+    }
+  }
+}
